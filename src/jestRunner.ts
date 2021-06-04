@@ -172,6 +172,10 @@ export class JestRunner {
   }
 
   private buildJestCommand(filePath: string, testName?: string, options?: string[]): string {
+    options.forEach((option, i) => {
+      options[i] = option.replace('$file', testName.split(' ')[0].replace('\\', ''));
+    });
+
     const args = this.buildJestArgs(filePath, testName, true, options);
     return `${this.config.jestCommand} ${args.join(' ')}`;
   }
